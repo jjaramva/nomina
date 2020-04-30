@@ -1,39 +1,36 @@
 package co.com.udem.nomina.hilos;
 
-import java.io.FileNotFoundException;
-import co.com.udem.nomina.dto.EmpleadoDTO;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import co.com.udem.nomina.util.LecturaArchivoNomina;
 
 public class ProcesarArchivoNomina implements Runnable {
 
-	EmpleadoDTO empleadoDTO = new EmpleadoDTO();
+	String mensaje = "";
+	private static final Logger logger = LogManager.getLogger(ProcesarArchivoNomina.class);
+	Thread t;
 
-	public void invocaProcesarArchivo() throws FileNotFoundException {
-		Thread thread = new Thread(new ProcesarArchivoNomina());
-		thread.start();
-
+	public void invocaProcesarArchivo() {
+		t = new Thread(this);
+		t.start();
 	}
 
 	public void run() {
+		BasicConfigurator.configure();
 		while (true) {
-
-			LecturaArchivoNomina lecturaArchivoNomina = new LecturaArchivoNomina();
 			try {
-				lecturaArchivoNomina.leerArchivo();
-			} catch (FileNotFoundException e) {
-				System.out.println("Por favor verifique que el archivo exista.");
-			}
-
-			if (lecturaArchivoNomina.cantidadRegistros() == 3) {
-				lecturaArchivoNomina.imprimirEmpleado();
-				break;
-			}
-			try {
-				Thread.sleep(5000);
+				Thread.sleep(1000);
+				mensaje = LecturaArchivoNomina.leerArchivo();
+				int cantidadRegistros = LecturaArchivoNomina.tamanoHashMap();
+				if (cantidadRegistros == 4) {
+					LecturaArchivoNomina.imprimirEmpleado();
+					break;
+				}
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
+				Thread.currentThread().interrupt();
 			}
-
 		}
 
 	}

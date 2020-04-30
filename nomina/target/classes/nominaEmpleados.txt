@@ -1,0 +1,4 @@
+Julian,Jaramillo,98713815,Sistemas,5000000
+Juan,Jaramillo,8888888,Sistemas,3000000
+Milena,Jaramillo,7777777,Talento Humano,2000000
+Prueba,Jaramillo,4444444,Talento Humano,2000000

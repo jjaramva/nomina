@@ -1,7 +1,6 @@
 package co.com.udem.nomina.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -10,29 +9,33 @@ import co.com.udem.nomina.dto.EmpleadoDTO;
 
 public class LecturaArchivoNomina {
 
-	Hashtable<String, EmpleadoDTO> listaEmpleadoTabla = new Hashtable<String, EmpleadoDTO>();
-	private int cantidadRegistros = 0;
+	private static Hashtable<String, EmpleadoDTO> listaEmpleadoTabla = new Hashtable<String, EmpleadoDTO>();
+	static InputStream archivoNomina = null;
 
-	public void leerArchivo() throws FileNotFoundException {
+	public static String leerArchivo() {
 
-		File file = new File("J:\\Dirtrab\\nominaEmpleados.txt");
-		Scanner scanner = new Scanner(file);
+		archivoNomina = ClassLoader.class.getResourceAsStream("/nominaEmpleados.txt");
+		Scanner scanner = null;
+		String mensaje = "";
 
 		try {
+			scanner = new Scanner(archivoNomina);
 			while (scanner.hasNextLine()) {
 				String registro = scanner.nextLine();
 				parseLine(registro);
-				cantidadRegistros++;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			mensaje = "El archivo no está en la ruta especificada";
 		} finally {
-			scanner.close();
+			if (scanner != null) {
+				scanner.close();
+			}
 		}
+		return mensaje;
 
 	}
 
-	private void parseLine(String registro) {
+	private static void parseLine(String registro) {
 		Scanner scanner = new Scanner(registro);
 		scanner.useDelimiter(",");
 
@@ -49,7 +52,7 @@ public class LecturaArchivoNomina {
 		scanner.close();
 	}
 
-	public void imprimirEmpleado() {
+	public static void imprimirEmpleado() {
 		Enumeration<String> nominaDTO = listaEmpleadoTabla.keys();
 		Object cedula;
 		while (nominaDTO.hasMoreElements()) {
@@ -62,9 +65,9 @@ public class LecturaArchivoNomina {
 			System.out.println("---------------------------------------------------------------------");
 		}
 	}
-
-	public int cantidadRegistros() {
-		return cantidadRegistros;
+	
+	public static int tamanoHashMap() {
+		return listaEmpleadoTabla.size();
 	}
 
 }
