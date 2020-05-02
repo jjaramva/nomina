@@ -25,7 +25,7 @@ public class ProcesarArchivoNomina implements Runnable {
 				if (mensaje != null) {
 					logger.info(mensaje);
 				}
-				int cantidadRegistros = LecturaArchivoNomina.tamanoHashMap();
+				int cantidadRegistros = LecturaArchivoNomina.tamanoHashtable();
 				if (cantidadRegistros == 3) {
 					LecturaArchivoNomina.imprimirEmpleado();
 					break;

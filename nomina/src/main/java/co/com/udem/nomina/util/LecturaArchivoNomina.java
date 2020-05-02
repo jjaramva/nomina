@@ -14,15 +14,11 @@ public class LecturaArchivoNomina {
 	private static final Logger logger = LogManager.getLogger(LecturaArchivoNomina.class);
 	static InputStream archivoNomina = null;
 
-	private LecturaArchivoNomina() {
-
-	}
-
 	public static String leerArchivo() {
 
 		archivoNomina = ClassLoader.class.getResourceAsStream("/nominaEmpleados.txt");
 		Scanner scanner = null;
-		String mensaje = "";
+		String mensaje = null;
 
 		try {
 			scanner = new Scanner(archivoNomina);
@@ -72,7 +68,7 @@ public class LecturaArchivoNomina {
 		}
 	}
 
-	public static int tamanoHashMap() {
+	public static int tamanoHashtable() {
 		return listaEmpleadoTabla.size();
 	}
 
