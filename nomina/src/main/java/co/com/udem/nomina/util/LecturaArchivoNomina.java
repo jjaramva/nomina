@@ -14,6 +14,10 @@ public class LecturaArchivoNomina {
 	private static final Logger logger = LogManager.getLogger(LecturaArchivoNomina.class);
 	static InputStream archivoNomina = null;
 
+	private LecturaArchivoNomina() {
+
+	}
+	
 	public static String leerArchivo() {
 
 		archivoNomina = ClassLoader.class.getResourceAsStream("/nominaEmpleados.txt");

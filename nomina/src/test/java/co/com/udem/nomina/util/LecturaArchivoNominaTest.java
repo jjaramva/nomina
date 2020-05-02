@@ -2,9 +2,9 @@ package co.com.udem.nomina.util;
 
 import org.junit.Test;
 import co.com.udem.nomina.dto.EmpleadoDTO;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import java.util.Hashtable;
 import java.util.Scanner;
 
@@ -13,19 +13,25 @@ public class LecturaArchivoNominaTest {
 	@Test
 	public void testleerArchivo() {
 		String mensaje = LecturaArchivoNomina.leerArchivo();
-		assertEquals(null, mensaje);
+		assertNull(mensaje);
 	}
 
 	@Test
-	public void testTamanoHashTable() {
+	public void testTamanoHashTableEquals() {
 		LecturaArchivoNomina.leerArchivo();
 		int cantidadRegistros = LecturaArchivoNomina.tamanoHashtable();
 		assertEquals(3, cantidadRegistros);
 	}
 
 	@Test
-	public void testParseLine() {
+	public void testTamanoHashTableNotEquals() {
+		LecturaArchivoNomina.leerArchivo();
+		int cantidadRegistros = LecturaArchivoNomina.tamanoHashtable();
+		assertNotEquals(4, cantidadRegistros);
+	}
 
+	@Test
+	public void testParseLine() {
 		Hashtable<String, EmpleadoDTO> listaEmpleadoTablaTest = new Hashtable<String, EmpleadoDTO>();
 		String registro = "Nombre,Apellido,Cedula,Departamento,2222";
 		Scanner scanner = new Scanner(registro);
@@ -39,8 +45,6 @@ public class LecturaArchivoNominaTest {
 		empleadoDTO.setSalario(Double.parseDouble(scanner.next()));
 		listaEmpleadoTablaTest.put(empleadoDTO.getCedula(), empleadoDTO);
 		scanner.close();
-		assertThat(listaEmpleadoTablaTest.get(cedula), is(empleadoDTO));
-
+		assertEquals(listaEmpleadoTablaTest.get(cedula), empleadoDTO);
 	}
-
 }
