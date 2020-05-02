@@ -20,10 +20,13 @@ public class ProcesarArchivoNomina implements Runnable {
 		BasicConfigurator.configure();
 		while (true) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 				mensaje = LecturaArchivoNomina.leerArchivo();
+				if (mensaje != null) {
+					logger.info(mensaje);
+				}
 				int cantidadRegistros = LecturaArchivoNomina.tamanoHashMap();
-				if (cantidadRegistros == 4) {
+				if (cantidadRegistros == 3) {
 					LecturaArchivoNomina.imprimirEmpleado();
 					break;
 				}

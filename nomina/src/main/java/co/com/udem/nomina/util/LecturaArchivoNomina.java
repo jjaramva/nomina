@@ -4,13 +4,19 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Scanner;
-
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import co.com.udem.nomina.dto.EmpleadoDTO;
 
 public class LecturaArchivoNomina {
 
 	private static Hashtable<String, EmpleadoDTO> listaEmpleadoTabla = new Hashtable<String, EmpleadoDTO>();
+	private static final Logger logger = LogManager.getLogger(LecturaArchivoNomina.class);
 	static InputStream archivoNomina = null;
+
+	private LecturaArchivoNomina() {
+
+	}
 
 	public static String leerArchivo() {
 
@@ -35,7 +41,7 @@ public class LecturaArchivoNomina {
 
 	}
 
-	private static void parseLine(String registro) {
+	public static void parseLine(String registro) {
 		Scanner scanner = new Scanner(registro);
 		scanner.useDelimiter(",");
 
@@ -57,15 +63,15 @@ public class LecturaArchivoNomina {
 		Object cedula;
 		while (nominaDTO.hasMoreElements()) {
 			cedula = nominaDTO.nextElement();
-			System.out.println("La Cedula es: " + cedula);
-			System.out.println("El Nombre es: " + listaEmpleadoTabla.get(cedula).getNombre());
-			System.out.println("El Apellido es: " + listaEmpleadoTabla.get(cedula).getApellido());
-			System.out.println("El Departamento es: " + listaEmpleadoTabla.get(cedula).getDepartamento());
-			System.out.println("El Salario es: " + listaEmpleadoTabla.get(cedula).getSalario());
-			System.out.println("---------------------------------------------------------------------");
+			logger.info("La Cedula es: " + cedula);
+			logger.info("El Nombre es: " + listaEmpleadoTabla.get(cedula).getNombre());
+			logger.info("El Apellido es: " + listaEmpleadoTabla.get(cedula).getApellido());
+			logger.info("El Departamento es: " + listaEmpleadoTabla.get(cedula).getDepartamento());
+			logger.info("El Salario es: " + listaEmpleadoTabla.get(cedula).getSalario());
+			logger.info("-------------------------------------------------");
 		}
 	}
-	
+
 	public static int tamanoHashMap() {
 		return listaEmpleadoTabla.size();
 	}
