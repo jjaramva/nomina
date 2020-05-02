@@ -1,0 +1,3 @@
+Julian,Jaramillo,98713815,Sistemas,5000000
+Juan,Jaramillo,98713816,Sistemas,3000000
+Milena,Jaramillo,98713817,Talento Humano,2000000
